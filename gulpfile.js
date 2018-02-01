@@ -23,12 +23,14 @@ gulp.task('move', function () {
     return gulp.src(
         [
             './**',
-            '!./{node_modules,node_modules,dist,build/**}',
+            '!./{node_modules,node_modules/**}',
+            '!./{dist,dist/**}',
+            '!./{build,build/**}',
             '!./*.js',
             '!./*.json',
             '!./*.md'
         ]
-    ).pipe(gulp.dest(buildFolder));
+    ).pipe(gulp.dest(buildFolder + '/.last_version'));
 });
 
 // Кодирование в 1251
@@ -43,7 +45,7 @@ gulp.task('encode', function () {
 
 // Архивирует в tar.gz
 gulp.task('archive', function () {
-    return gulp.src(path.join(buildFolder, '**/*'))
+    return gulp.src(path.join(buildFolder, '**/.last_version/**'))
         .pipe(tar('.last_version.tar'))
         .pipe(gzip())
         .pipe(gulp.dest(buildFolder));
