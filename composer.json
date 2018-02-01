@@ -17,9 +17,6 @@
       "email": "sergey@s-pantelev.ru"
     }
   ],
-  "extra": {
-    "installer-name": "prominado.rest"
-  },
   "require": {
     "php": ">=5.3.0",
     "roave/security-advisories": "dev-master",
