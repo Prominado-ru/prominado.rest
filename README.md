@@ -62,7 +62,7 @@ class Rest
             throw new \Prominado\Rest\RestException('No user_id passed');    
         }
         
-        if(!$userId) {
+        if(!$fields) {
             throw new \Prominado\Rest\RestException('No fields passed');    
         }
         
