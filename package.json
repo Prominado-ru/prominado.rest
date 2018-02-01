@@ -1,0 +1,28 @@
+{
+  "name": "prominado.rest",
+  "version": "1.0.0",
+  "description": "Модуль для организации REST-сервиса в проектах на 1С-Битрикс.",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-file": "^0.3.0",
+    "gulp-folders": "^1.1.0",
+    "gulp-git": "^2.4.2",
+    "gulp-gzip": "^1.4.0",
+    "gulp-iconv": "0.0.1",
+    "gulp-tar": "^2.0.0",
+    "moment": "^2.19.3",
+    "run-sequence": "^2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prominado-ru/prominado.rest.git"
+  },
+  "author": "Panteleev Sergey <sergey@s-panteleev.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Prominado-ru/prominado.rest/issues"
+  },
+  "homepage": "https://github.com/Prominado-ru/prominado.rest#readme"
+}

@@ -1,0 +1,6 @@
+<?php
+
+$MESS['PROMINADO_MODULE_REST_NAME'] = 'Prominado: Rest';
+$MESS['PROMINADO_MODULE_REST_DESCRIPTION'] = 'Описание модуля';
+$MESS['PROMINADO_MODULE_REST_PARTNER'] = 'Prominado';
+$MESS['PROMINADO_MODULE_REST_PARTNER_WEBSITE'] = 'http://prominado.ru';
