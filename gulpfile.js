@@ -13,12 +13,12 @@ let gulp = require('gulp'),
 const buildFolder = 'build';
 const distrFolder = 'dist';
 
-// Очистка директории со сборкой
+// РћС‡РёСЃС‚РєР° РґРёСЂРµРєС‚РѕСЂРёРё СЃРѕ СЃР±РѕСЂРєРѕР№
 gulp.task('clean', function () {
     del(buildFolder);
 });
 
-// Копирование всех файлов модуля в директорию сборки
+// РљРѕРїРёСЂРѕРІР°РЅРёРµ РІСЃРµС… С„Р°Р№Р»РѕРІ РјРѕРґСѓР»СЏ РІ РґРёСЂРµРєС‚РѕСЂРёСЋ СЃР±РѕСЂРєРё
 gulp.task('move', function () {
     return gulp.src(
         [
@@ -33,7 +33,7 @@ gulp.task('move', function () {
     ).pipe(gulp.dest(buildFolder + '/.last_version'));
 });
 
-// Кодирование в 1251
+// РљРѕРґРёСЂРѕРІР°РЅРёРµ РІ 1251
 gulp.task('encode', function () {
     return gulp.src([
         path.join(buildFolder, '**/*.php'),
@@ -43,7 +43,7 @@ gulp.task('encode', function () {
         .pipe(gulp.dest(buildFolder));
 });
 
-// Архивирует в tar.gz
+// РђСЂС…РёРІРёСЂСѓРµС‚ РІ tar.gz
 gulp.task('archive', function () {
     return gulp.src(path.join(buildFolder, '**/.last_version/**'))
         .pipe(tar('.last_version.tar'))
@@ -51,18 +51,18 @@ gulp.task('archive', function () {
         .pipe(gulp.dest(buildFolder));
 });
 
-// Переносит в директорию с дистрибутивом
+// РџРµСЂРµРЅРѕСЃРёС‚ РІ РґРёСЂРµРєС‚РѕСЂРёСЋ СЃ РґРёСЃС‚СЂРёР±СѓС‚РёРІРѕРј
 gulp.task('dist', function () {
     return gulp.src(path.join(buildFolder, '.last_version.tar.gz'))
         .pipe(gulp.dest(distrFolder));
 });
 
-// Сборка текущей версии модуля
+// РЎР±РѕСЂРєР° С‚РµРєСѓС‰РµР№ РІРµСЂСЃРёРё РјРѕРґСѓР»СЏ
 gulp.task('build_last_version', function (callback) {
     sequence('clean', 'move', 'encode', 'archive', 'dist', 'clean', callback);
 });
 
-// Сборка всего модуля
+// РЎР±РѕСЂРєР° РІСЃРµРіРѕ РјРѕРґСѓР»СЏ
 gulp.task('build', function (callback) {
     sequence('build_last_version', callback);
 });

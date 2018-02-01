@@ -2,6 +2,7 @@
 
 namespace Prominado\Rest;
 
+use Bitrix\Main\Context;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\Text\Encoding;
 use Bitrix\Main\Web\Json;
@@ -63,12 +64,28 @@ class Route
     {
         $response = [];
 
+        $server = Context::getCurrent()->getServer()->toArray();
+
+        $request = new Request();
+        $request->setQuery($this->query);
+        $request->setServer($server);
+
         if (!array_key_exists($this->method, $this->methodList)) {
             $response = ['error' => 'METHOD_NOT_FOUND', 'description' => 'Method ' . $this->method . ' not found'];
             $this->error_code = 404;
         }
 
         $method = $this->methodList[$this->method];
+
+        if (!$this->error_code && method_exists($method['authenticator'][0], $method['authenticator'][1])) {
+            if (!\call_user_func($method['authenticator'], $request)) {
+                $response = [
+                    'error'       => 'UNAUTHORIZED',
+                    'description' => 'Unauthorized'
+                ];
+                $this->error_code = 401;
+            }
+        }
 
         if (!$this->error_code && !method_exists($method['callback'][0], $method['callback'][1])) {
             $response = [
@@ -91,10 +108,6 @@ class Route
         if ($this->error_code) {
             \CHTTP::SetStatus($this->error_code);
         } else {
-            $request = new Request();
-
-            $request->setQuery($this->query);
-
             try {
                 $res = \call_user_func($method['callback'], $request);
 

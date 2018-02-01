@@ -8,6 +8,7 @@ class Request
     private $http_status = 200;
     private $http_method = 'GET';
     private $headers = [];
+    private $server = [];
 
     public function withStatus($status)
     {
@@ -22,6 +23,11 @@ class Request
     public function getStatusCode()
     {
         return $this->http_status;
+    }
+
+    public function setHeaders($headers)
+    {
+        $this->headers = $headers;
     }
 
     public function getHeaders()
@@ -57,5 +63,15 @@ class Request
     public function getQuery($name)
     {
         return $this->query[$name];
+    }
+
+    public function setServer($server)
+    {
+        $this->server = $server;
+    }
+
+    public function getServer()
+    {
+        return $this->server;
     }
 }

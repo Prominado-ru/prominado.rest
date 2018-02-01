@@ -1,7 +1,7 @@
 {
   "name": "prominado/rest",
   "description": "Simple REST router for Bitrix",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "bitrix-d7-module",
   "license": "MIT",
   "keywords": [
