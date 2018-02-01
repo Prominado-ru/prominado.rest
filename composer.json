@@ -1,0 +1,29 @@
+{
+  "name": "prominado/rest",
+  "description": "Simple REST router for Bitrix",
+  "version": "1.0.0",
+  "type": "bitrix-d7-module",
+  "license": "MIT",
+  "keywords": [
+    "bitrix",
+    "rest"
+  ],
+  "support": {
+    "email": "sergey@s-panteleev.ru"
+  },
+  "authors": [
+    {
+      "name": "Sergey Panteleev",
+      "email": "sergey@s-pantelev.ru"
+    }
+  ],
+  "extra": {
+    "installer-name": "prominado.rest"
+  },
+  "require": {
+    "php": ">=5.3.0",
+    "roave/security-advisories": "dev-master",
+    "composer/installers": "~1"
+  },
+  "minimum-stability": "dev"
+}

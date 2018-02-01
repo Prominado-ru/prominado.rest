@@ -22,7 +22,11 @@ gulp.task('clean', function () {
 gulp.task('move', function () {
     return gulp.src(
         [
-            './last_version/**'
+            './**',
+            '!./{node_modules,node_modules,dist,build/**}',
+            '!./*.js',
+            '!./*.json',
+            '!./*.md'
         ]
     ).pipe(gulp.dest(buildFolder));
 });
@@ -51,54 +55,12 @@ gulp.task('dist', function () {
         .pipe(gulp.dest(distrFolder));
 });
 
-// Заменяет файл с версией модуля
-gulp.task('version', function () {
-
-    git.exec({args: 'log --tags --simplify-by-decoration --pretty="format:%cI %d"'}, function (error, output) {
-
-        const versions = output.trim().split(os.EOL);
-
-        // В ответе будет что-то типа:
-        // Sun, 3 Dec 2017 00:05:48 +0300  (tag: 0.0.10)
-        // Tue, 21 Nov 2017 23:58:01 +0300  (tag: 0.0.9)
-        // Tue, 7 Nov 2017 23:45:17 +0300  (tag: 0.0.8)
-        // Sun, 22 Oct 2017 00:10:00 +0300
-
-        let last = '';
-        if (versions.length <= 1) {
-            // Если версий нет, то подменим вывод
-            last = moment().format() + '  (tag: 0.0.1)';
-        } else {
-            last = versions[0];
-        }
-
-        const pattern = /(.*)\s\s\(tag: (.*)\)/gi;
-        const match = pattern.exec(last);
-        const lastVersionDate = moment(match[1]).format('YYYY-MM-DD HH:mm:ss');
-        const lastVersion = match[2];
-
-        const fileContents = `<?php
-$arModuleVersion = array(
-    'VERSION' => '${ lastVersion }',
-    'VERSION_DATE' => '${ lastVersionDate }',
-);`;
-        return file('version.php', fileContents)
-            .pipe(gulp.dest(path.join(buildFolder, 'install')));
-
-    });
-});
-
 // Сборка текущей версии модуля
 gulp.task('build_last_version', function (callback) {
-    sequence('clean', 'move', 'version', 'encode', 'archive', 'dist', 'clean', callback);
-});
-
-// Сборка обновления модуля (разница между последней и предпоследней версией по тегам git)
-gulp.task('build_update', function (callback) {
-
+    sequence('clean', 'move', 'encode', 'archive', 'dist', 'clean', callback);
 });
 
 // Сборка всего модуля
 gulp.task('build', function (callback) {
-    sequence('build_last_version', 'build_update', callback);
+    sequence('build_last_version', callback);
 });
