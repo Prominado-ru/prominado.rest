@@ -22,10 +22,7 @@ gulp.task('clean', function () {
 gulp.task('move', function () {
     return gulp.src(
         [
-            './**',
-            '!./{node_modules,node_modules/**}',
-            '!./*.js',
-            '!./*.json'
+            './last_version/**'
         ]
     ).pipe(gulp.dest(buildFolder));
 });
