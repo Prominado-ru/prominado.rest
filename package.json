@@ -1,7 +1,7 @@
 {
   "name": "prominado.rest",
   "version": "1.0.0",
-  "description": "Модуль для организации REST-сервиса в проектах на 1С-Битрикс.",
+  "description": "Simple REST router for Bitrix",
   "main": "gulpfile.js",
   "devDependencies": {
     "del": "^3.0.0",

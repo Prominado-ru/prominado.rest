@@ -13,6 +13,7 @@ class Route
     private $http_method;
     private $methodList;
     private $transport = 'json';
+    private $error_code;
 
     const HTTP_METHOD_POST = 'POST';
     const HTTP_METHOD_GET = 'GET';
@@ -61,34 +62,35 @@ class Route
     public function process()
     {
         $response = [];
-        $error = false;
 
         if (!array_key_exists($this->method, $this->methodList)) {
-            $response = ['error' => 'METHOD_NOT_FOUND', 'description' => 'Method ' . $this->method . ' not found!'];
-            $error = true;
+            $response = ['error' => 'METHOD_NOT_FOUND', 'description' => 'Method ' . $this->method . ' not found'];
+            $this->error_code = 404;
         }
 
         $method = $this->methodList[$this->method];
 
-        if (!$error && !method_exists($method['callback'][0], $method['callback'][1])) {
+        if (!$this->error_code && !method_exists($method['callback'][0], $method['callback'][1])) {
             $response = [
-                'error'       => 'METHOD_NOT_SUPPORTED',
+                'error'       => 'METHOD_NOT_IMPLEMENTED',
                 'description' => 'Method ' . $this->method . ' has not callback handler'
             ];
-            $error = true;
+            $this->error_code = 501;
         }
 
         if (\is_array($method['allow_methods']) && \count($method['allow_methods']) > 0) {
             if (!\in_array($this->http_method, $method['allow_methods'], false)) {
                 $response = [
-                    'error'       => 'METHOD_NOT_ALLOW',
-                    'description' => 'Method ' . $this->method . ' not allow with ' . $this->http_method
+                    'error'       => 'METHOD_NOT_ALLOWED',
+                    'description' => 'Method ' . $this->method . ' not allowed with ' . $this->http_method
                 ];
-                $error = true;
+                $this->error_code = 405;
             }
         }
 
-        if (!$error) {
+        if ($this->error_code) {
+            \CHTTP::SetStatus($this->error_code);
+        } else {
             $request = new Request();
 
             $request->setQuery($this->query);
@@ -108,6 +110,7 @@ class Route
                 $response['result'] = $res;
                 $response['query'] = $this->query;
             } catch (RestException $exception) {
+                \CHTTP::SetStatus(400);
                 $response = ['error' => $exception->getErrorCode(), 'description' => $exception->getMessage()];
             }
         }
