@@ -2,7 +2,7 @@
 
 Модуль для организации REST-сервиса в проектах на 1С-Битрикс.
 
-Модуль обрабатывает адреса вида ``http://prominado.ru/rest/method.name``
+Модуль обрабатывает адреса вида ``http://my_website.ru/rest/method.name``
 
 Чтобы зарегистрировать обработчик, необходимо зарегистрировать обработчик:
 
@@ -29,7 +29,7 @@ function restServiceDescription()
 ````
 
 Указанные выше методы будут доступны по адресам:
-``http://prominado.ru/rest/data.get`` и ``http://prominado.ru/rest/data.update`` 
+``http://my_website.ru/rest/data.get`` и ``http://my_website.ru/rest/data.update`` 
 
 Код обработчика:
 
